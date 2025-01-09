@@ -1,0 +1,12 @@
+name: crm-ai
+
+services:
+  crm_ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - .:/crm_ai
+    command: sleep infinity

@@ -1,7 +1,7 @@
-name: crm-ai
+name: your-service
 
 services:
-  crm_ai:
+  service_name:
     build:
       context: .
       dockerfile: Dockerfile

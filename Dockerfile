@@ -1,10 +1,10 @@
 FROM python:3.12-slim
 
 # Set working directory
-WORKDIR /app
+WORKDIR /proj_base_path
 
 # Adding path to system environment variable
-ENV BASEPATH="/crm_ai"
+ENV BASEPATH="/proj_base_path"
 ENV PYTHONPATH="$PYTHONPATH:$BASEPATH"
 
 # Install Git

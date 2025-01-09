@@ -8,5 +8,5 @@ services:
     environment:
       - TZ=Asia/Kolkata
     volumes:
-      - .:/crm_ai
+      - .:/proj_base_path
     command: sleep infinity

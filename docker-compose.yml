@@ -10,3 +10,13 @@ services:
     volumes:
       - .:/proj_base_path
     command: sleep infinity
+  jupyter_notebook:
+    build:
+      context: .
+      dockerfile: Dockerfile-jupyter
+    ports:
+      - "8899:8888"
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - .:/proj_base_path

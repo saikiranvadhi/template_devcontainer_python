@@ -17,12 +17,12 @@ RUN apt-get update \
 COPY requirements.txt requirements.txt
 # COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir notebook==7.2.2
 
-# Copy your project files
-# COPY . .
+WORKDIR /proj_base_path
 
-# Expose port (if needed)
-# EXPOSE 8000
+# Make port 8888 available to the world outside the container
+EXPOSE 8888
 
-# Run your application
-# CMD ["python", "app.py"]
+# Run Jupyter Notebook when the container launches
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--IdentityProvider.token=''", "--ServerApp.password=''"]

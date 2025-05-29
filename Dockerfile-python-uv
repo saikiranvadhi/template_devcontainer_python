@@ -1,0 +1,46 @@
+FROM python:3.12-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Set working directory
+WORKDIR /app
+
+# Adding path to system environment variable
+ENV BASEPATH="/app"
+ENV PYTHONPATH="$PYTHONPATH:$BASEPATH"
+
+# Install Git
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends git \
+  && apt-get purge -y --auto-remove \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install dependencies
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --locked --no-install-project
+
+# # # Install dependencies
+# # COPY requirements.txt requirements.txt
+# # RUN pip install --no-cache-dir -r requirements.txt
+
+# # Copy your project files
+# COPY . .
+
+# Run with uvicorn
+CMD ["uv", "run", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+
+## docker-compose.yml
+# name: my_app
+# services:
+#   my_app_python:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile-python-uv
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - TZ=Asia/Kolkata
+#       - UVICORN_RELOAD=true
+#     volumes:
+#       - .:/app

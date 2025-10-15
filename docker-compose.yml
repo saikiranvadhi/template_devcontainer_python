@@ -7,7 +7,7 @@ services:
   #     context: .
   #     dockerfile: Dockerfile-python-pip
   #   environment:
-  #     - TZ=Asia/Kolkata
+  #     - TZ=${TZ}
   #   volumes:
   #     - .:/app
   #   command: sleep infinity
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: Dockerfile-python-uv
     environment:
-      - TZ=Asia/Kolkata
+      - TZ=${TZ}
     volumes:
       - .:/app
     command: sleep infinity
@@ -32,7 +32,7 @@ services:
   #   ports:
   #     - "8000:8000"
   #   environment:
-  #     - TZ=Asia/Kolkata
+  #     - TZ=${TZ}
   #     - UVICORN_RELOAD=true
   #   volumes:
   #     - .:/app
@@ -45,7 +45,7 @@ services:
   #   ports:
   #     - "8888:8888"
   #   environment:
-  #     - TZ=Asia/Kolkata
+  #     - TZ=${TZ}
   #   volumes:
   #     - .:/app
 
@@ -57,7 +57,7 @@ services:
     ports:
       - "8889:8888"
     environment:
-      - TZ=Asia/Kolkata
+      - TZ=${TZ}
     volumes:
       - .:/app
 
@@ -69,11 +69,11 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - TZ=Asia/Kolkata
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=my_db
-      - MYSQL_USER=dev_user
-      - MYSQL_PASSWORD=dev_password
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
 

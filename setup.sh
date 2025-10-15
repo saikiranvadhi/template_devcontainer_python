@@ -38,6 +38,22 @@ fi
 echo "✅ Found requirements.txt"
 echo ""
 
+# Create .env file if it doesn't exist
+if [ ! -f ".env" ]; then
+    if [ -f ".env.example" ]; then
+        echo "🔧 Creating .env file from .env.example..."
+        cp .env.example .env
+        echo "✅ Created .env file (please review and update values as needed)"
+        echo ""
+    else
+        echo "⚠️  .env.example not found, skipping .env creation"
+        echo ""
+    fi
+else
+    echo "✅ .env file already exists"
+    echo ""
+fi
+
 # Initialize UV project if pyproject.toml doesn't exist
 if [ ! -f "pyproject.toml" ]; then
     echo "📦 Initializing UV project..."

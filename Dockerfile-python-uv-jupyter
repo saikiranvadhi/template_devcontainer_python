@@ -20,11 +20,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-install-project
 
-# Install additional requirements using uv pip install
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    uv pip install --system -r requirements.txt
-
 # Install Jupyter using uv pip install
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv pip install --system notebook==7.2.2

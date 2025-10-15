@@ -62,7 +62,7 @@ services:
       - .:/app
 
   # MySQL database
-  mysql:
+  mysql_server:
     build:
       context: .
       dockerfile: Dockerfile-mysql

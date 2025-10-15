@@ -173,5 +173,3 @@ cython_debug/
 ### Custom
 # Mac
 .DS_Store
-pyproject.toml
-uv.lock

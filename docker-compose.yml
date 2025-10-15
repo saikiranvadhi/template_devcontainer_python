@@ -1,4 +1,4 @@
-name: rough-work-20XXYYZZ
+name: rough-work-20xxyyzz
 
 services:
   # # Python app with pip
@@ -14,7 +14,7 @@ services:
 
   # Python app with uv
   # python_app_uv:
-  rough_work_20XXYYZZ:
+  rough_work_20xxyyzz:
     build:
       context: .
       dockerfile: Dockerfile-python-uv

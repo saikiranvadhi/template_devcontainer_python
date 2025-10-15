@@ -1,11 +1,5 @@
 FROM mysql:lts-oraclelinux9
 
-# Set environment variables for MySQL
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_DATABASE=my_db
-ENV MYSQL_USER=dev_user
-ENV MYSQL_PASSWORD=dev_password
-
 # Set timezone
 ENV TZ=Asia/Kolkata
 

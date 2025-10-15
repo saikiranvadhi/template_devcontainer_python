@@ -1,0 +1,63 @@
+FROM python:3.12-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Set working directory
+WORKDIR /app
+
+# Adding path to system environment variable
+ENV BASEPATH="/app"
+ENV PYTHONPATH="$PYTHONPATH:$BASEPATH"
+
+# Install Git & MySQL Client
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends git default-mysql-client \
+  && apt-get purge -y --auto-remove \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install dependencies using uv
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --locked --no-install-project
+
+# Install Jupyter using uv add (since files are mounted, not copied)
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv add -r requirements.txt
+
+# Install Jupyter using uv add (since files are mounted, not copied)
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv add notebook==7.2.2
+
+# # Alternative approach using pip if uv.lock doesn't include jupyter
+# # COPY requirements.txt requirements.txt
+# # RUN --mount=type=cache,target=/root/.cache/uv \
+# #     uv pip install --system -r requirements.txt
+# # RUN --mount=type=cache,target=/root/.cache/uv \
+# #     uv pip install --system notebook==7.2.2
+
+# Copy your project files
+# COPY . .
+
+# Make port 8888 available to the world outside the container
+EXPOSE 8888
+
+# Run Jupyter Notebook when the container launches
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--IdentityProvider.token=''", "--ServerApp.password=''"]
+
+## docker-compose.yml
+# name: my_app
+# services:
+#   my_app_jupyter:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile-python-uv-jupyter
+#     ports:
+#       - "8888:8888"
+#     environment:
+#       - TZ=Asia/Kolkata
+#     volumes:
+#       - .:/app

@@ -1,0 +1,81 @@
+name: rough-work-20XXYYZZ
+
+services:
+  # # Python app with pip
+  # python_app_pip:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-python-pip
+  #   environment:
+  #     - TZ=Asia/Kolkata
+  #   volumes:
+  #     - .:/app
+  #   command: sleep infinity
+
+  # Python app with uv
+  # python_app_uv:
+  rough_work_20XXYYZZ:
+    build:
+      context: .
+      dockerfile: Dockerfile-python-uv
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - .:/app
+    command: sleep infinity
+
+  # # Python app with uv (run app)
+  # python_app_uv_run:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-python-uv-run-app
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - TZ=Asia/Kolkata
+  #     - UVICORN_RELOAD=true
+  #   volumes:
+  #     - .:/app
+
+  # # Jupyter notebook with pip
+  # jupyter_pip:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile-python-pip-jupyter
+  #   ports:
+  #     - "8888:8888"
+  #   environment:
+  #     - TZ=Asia/Kolkata
+  #   volumes:
+  #     - .:/app
+
+  # Jupyter notebook with uv
+  jupyter_uv:
+    build:
+      context: .
+      dockerfile: Dockerfile-python-uv-jupyter
+    ports:
+      - "8889:8888"
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - .:/app
+
+  # MySQL database
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - TZ=Asia/Kolkata
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=my_db
+      - MYSQL_USER=dev_user
+      - MYSQL_PASSWORD=dev_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
